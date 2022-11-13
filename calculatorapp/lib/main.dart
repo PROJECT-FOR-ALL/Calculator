@@ -7,18 +7,18 @@ runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-@override
-Widget build(BuildContext context) {
-	return MaterialApp(
-	debugShowCheckedModeBanner: false,
-	home: HomePage(),
-	); // MaterialApp
-}
+  @override
+  Widget build(BuildContext context) {
+	  return MaterialApp(
+	  debugShowCheckedModeBanner: false,
+	  home: HomePage(),
+	  ); // MaterialApp
+  }
 }
 
 class HomePage extends StatefulWidget {
-@override
-_HomePageState createState() => _HomePageState();
+  @override
+    _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
