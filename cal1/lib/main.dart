@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: Color.fromARGB(255, 192, 59, 49),
+        primary: Color.fromARGB(255, 161, 45, 229),
       ),),
       home: const MyHomePage(title: 'Calculator ForAll'),
     );
@@ -27,7 +27,7 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+    State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
