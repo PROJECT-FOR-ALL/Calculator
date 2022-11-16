@@ -55,7 +55,7 @@ Widget build(BuildContext context) {
 	appBar: new AppBar(
 		title: new Text("Calculator"),
 	), //AppBar
-	backgroundColor: Colors.white38,
+	backgroundColor: Color.fromARGB(150, 0, 81, 255),
 	body: Column(
 		children: <Widget>[
 		Expanded(
@@ -113,8 +113,7 @@ Widget build(BuildContext context) {
 					return MyButton(
 						buttontapped: () {
 						setState(() {
-							userInput =
-								userInput.substring(0, userInput.length - 1);
+							userInput =	userInput.substring(0, userInput.length - 1);
 						});
 						},
 						buttonText: buttons[index],
@@ -128,7 +127,13 @@ Widget build(BuildContext context) {
 					return MyButton(
 						buttontapped: () {
 						setState(() {
+
 							userInput += buttons[index];
+
+              /*int per = (userInput) as int;
+              answer = (per * 0.01).toString();
+							userInput = answer + buttons[index];*/
+
 						});
 						},
 						buttonText: buttons[index],
@@ -187,11 +192,14 @@ bool isOperator(String x) {
 
 // function to calculate the input operation
 void equalPressed() {
-	String finaluserinput = userInput;
+  String finaluserinput = userInput;
 	finaluserinput = userInput.replaceAll('x', '*');
+  finaluserinput = userInput.replaceAll('%', '/100');
+
 
 	Parser p = Parser();
 	Expression exp = p.parse(finaluserinput);
+  
 	ContextModel cm = ContextModel();
 	double eval = exp.evaluate(EvaluationType.REAL, cm);
 	answer = eval.toString();
