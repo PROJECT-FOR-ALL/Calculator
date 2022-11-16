@@ -27,26 +27,26 @@ var answer = '';
 
 // Array of button
 final List<String> buttons = [
+	'AC',
 	'C',
-	'+/-',
 	'%',
-	'DEL',
+	'/',
 	'7',
 	'8',
 	'9',
-	'/',
+	'x',
 	'4',
 	'5',
 	'6',
-	'x',
+	'-',
 	'1',
 	'2',
 	'3',
-	'-',
+	'+',
+	'?',
 	'0',
 	'.',
 	'=',
-	'+',
 ];
 
 @override
@@ -93,7 +93,7 @@ Widget build(BuildContext context) {
 				gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
 					crossAxisCount: 4),
 				itemBuilder: (BuildContext context, int index) {
-					// Clear Button
+					// AC = All Clear Button
 					if (index == 0) {
 					return MyButton(
 						buttontapped: () {
@@ -103,19 +103,26 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Colors.blue[50],
-						textColor: Colors.black,
+						color: Color.fromARGB(255, 68, 164, 232),
+						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
 
-					// +/- button
+          // C = Delete Button
 					else if (index == 1) {
 					return MyButton(
+						buttontapped: () {
+						setState(() {
+							userInput =
+								userInput.substring(0, userInput.length - 1);
+						});
+						},
 						buttonText: buttons[index],
-						color: Colors.blue[50],
-						textColor: Colors.black,
+						color: Color.fromARGB(255, 68, 164, 232),
+						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
+
 					// % Button
 					else if (index == 2) {
 					return MyButton(
@@ -125,26 +132,13 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Colors.blue[50],
-						textColor: Colors.black,
+						color: Color.fromARGB(255, 68, 164, 232),
+						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
-					// Delete Button
-					else if (index == 3) {
-					return MyButton(
-						buttontapped: () {
-						setState(() {
-							userInput =
-								userInput.substring(0, userInput.length - 1);
-						});
-						},
-						buttonText: buttons[index],
-						color: Colors.blue[50],
-						textColor: Colors.black,
-					);
-					}
+				
 					// Equal_to Button
-					else if (index == 18) {
+					else if (index == 19) {
 					return MyButton(
 						buttontapped: () {
 						setState(() {
@@ -167,8 +161,8 @@ Widget build(BuildContext context) {
 						},
 						buttonText: buttons[index],
 						color: isOperator(buttons[index])
-							? Colors.blueAccent
-							: Colors.white,
+							? Color.fromARGB(255, 68, 164, 232)
+							: Color.fromARGB(255, 255, 255, 255),
 						textColor: isOperator(buttons[index])
 							? Colors.white
 							: Colors.black,
@@ -185,7 +179,9 @@ Widget build(BuildContext context) {
 bool isOperator(String x) {
 	if (x == '/' || x == 'x' || x == '-' || x == '+' || x == '=') {
 	return true;
-	}
+	} /*else if( x == '?'){
+    userInput = '4';
+  }*/
 	return false;
 }
 
