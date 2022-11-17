@@ -130,10 +130,6 @@ Widget build(BuildContext context) {
 
 							userInput += buttons[index];
 
-              /*int per = (userInput) as int;
-              answer = (per * 0.01).toString();
-							userInput = answer + buttons[index];*/
-
 						});
 						},
 						buttonText: buttons[index],
@@ -192,13 +188,16 @@ bool isOperator(String x) {
 
 // function to calculate the input operation
 void equalPressed() {
-  String finaluserinput = userInput;
-	finaluserinput = userInput.replaceAll('x', '*');
-  finaluserinput = userInput.replaceAll('%', '/100');
+  
+  String finaluserinput(String str){
+    str = str.replaceAll('x', '*');
+    str = str.replaceAll('%', '/100');
+    return str;
+  }
 
 
 	Parser p = Parser();
-	Expression exp = p.parse(finaluserinput);
+	Expression exp = p.parse(finaluserinput(userInput));
   
 	ContextModel cm = ContextModel();
 	double eval = exp.evaluate(EvaluationType.REAL, cm);
