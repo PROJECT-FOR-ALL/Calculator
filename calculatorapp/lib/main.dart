@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'botton.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 void main() {
@@ -68,7 +69,7 @@ Widget build(BuildContext context) {
 					alignment: Alignment.centerRight,
 					child: Text(
 						userInput,
-						style: TextStyle(fontSize: 18, color: Colors.white),
+						style: TextStyle(fontSize: 18, color: Color(0xFF57636C)),
 					),
 					),
 					Container(
@@ -78,7 +79,7 @@ Widget build(BuildContext context) {
 						answer,
 						style: TextStyle(
 							fontSize: 30,
-							color: Colors.white,
+							color: Color(0xFF101213),
 							fontWeight: FontWeight.bold),
 					),
 					)
@@ -139,7 +140,20 @@ Widget build(BuildContext context) {
 					}
 				
 					// Equal_to Button
-					else if (index == 19) {
+					else if (index == 18) {
+					return MyButton(
+						buttontapped: () {
+						setState(() {
+							userInput += '.';
+						});
+						},
+						buttonText: buttons[index],
+						color: Colors.white,
+						textColor: Color(0xFF101213),
+					);
+					}
+
+          else if (index == 19) {
 					return MyButton(
 						buttontapped: () {
 						setState(() {
@@ -201,6 +215,7 @@ void equalPressed() {
   
 	ContextModel cm = ContextModel();
 	double eval = exp.evaluate(EvaluationType.REAL, cm);
-	answer = eval.toString();
+	answer = eval.toStringAsFixed(3);
+  //toStringAsExponential(3);
 }
 }
