@@ -55,7 +55,7 @@ Widget build(BuildContext context) {
 	appBar: new AppBar(
 		title: new Text("Calculator"),
 	), //AppBar
-	backgroundColor: Color.fromARGB(150, 0, 81, 255),
+	backgroundColor: Color(0xFFF1F4F8),
 	body: Column(
 		children: <Widget>[
 		Expanded(
@@ -103,7 +103,7 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Color.fromARGB(255, 68, 164, 232),
+						color: Color(0xFF7BCFFF),
 						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
@@ -117,7 +117,7 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Color.fromARGB(255, 68, 164, 232),
+						color: Color(0xFF7BCFFF),
 						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
@@ -133,7 +133,7 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Color.fromARGB(255, 68, 164, 232),
+						color: Color(0xFF7BCFFF),
 						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
@@ -147,7 +147,7 @@ Widget build(BuildContext context) {
 						});
 						},
 						buttonText: buttons[index],
-						color: Colors.orange[700],
+						color: Color(0xFFF8A3EB),
 						textColor: Colors.white,
 					);
 					}
@@ -162,11 +162,11 @@ Widget build(BuildContext context) {
 						},
 						buttonText: buttons[index],
 						color: isOperator(buttons[index])
-							? Color.fromARGB(255, 68, 164, 232)
-							: Color.fromARGB(255, 255, 255, 255),
+							? Color(0xFFF8A3EB)
+							: Colors.white,
 						textColor: isOperator(buttons[index])
 							? Colors.white
-							: Colors.black,
+							: Color(0xFF101213),
 					);
 					}
 				}), // GridView.builder

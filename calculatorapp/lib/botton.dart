@@ -14,12 +14,13 @@ MyButton({this.color, this.textColor, this.buttonText, this.buttontapped});
 
 @override
 Widget build(BuildContext context) {
-	return GestureDetector(
-	onTap: buttontapped,
+	
+  return GestureDetector(
+	
 	child: Padding(
-		padding: const EdgeInsets.all(0.2),
+		padding: const EdgeInsets.all(5),
 		child: ClipRRect(
-		// borderRadius: BorderRadius.circular(25),
+		borderRadius: BorderRadius.circular(70),
 		child: Container(
 			color: color,
 			child: Center(
@@ -37,4 +38,29 @@ Widget build(BuildContext context) {
 	),
 	);
 }
+
+
+/*
+	return ElevatedButton(
+  onPressed: () {},
+  style: ElevatedButton.styleFrom(
+    shape: CircleBorder(), //<-- SEE HERE
+    padding: EdgeInsets.all(20),
+  ),
+  child: Container(
+			color: color,
+			child: Center(
+			child: Text(
+				buttonText,
+				style: TextStyle(
+				color: textColor,
+				fontSize: 25,
+				fontWeight: FontWeight.bold,
+				),
+			),
+			),
+		),
+);
+}
+*/
 }
