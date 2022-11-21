@@ -22,8 +22,8 @@ class SET extends StatefulWidget {
 
 class FirstScreen extends State<SET>{
   @override
-var userInput = '';
-var answer = '';
+  var userInput = '';
+  var answer = '';
 
 // Array of button
 final List<String> buttons = [
@@ -63,8 +63,10 @@ Widget build(BuildContext context) {
       ),
 
     backgroundColor: Color(0xFFF1F4F8),
+    iconTheme: IconThemeData(color: Color(0xFF57636C)),
     actions: [
     PopupMenuButton(
+      //icon: Icon(Icons.more_vert,color: Color(0xFF57636C)),
       itemBuilder: (context){
         return [
           PopupMenuItem<int>(
@@ -123,6 +125,7 @@ Widget build(BuildContext context) {
 				]),
 			),
 		),
+
 		Expanded(
 			flex: 3,
 			child: Container(
