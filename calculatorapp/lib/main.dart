@@ -110,18 +110,14 @@ class _HomePageState extends State<HomePage> {
         child: Align(alignment: Alignment.center,
         child: ElevatedButton(
           
-          child: Icon(
-            
-                Icons.mic,
-                size: 200,
-              ),
-              onPressed: (
+          child: Icon(Icons.mic,size: 200),
+              onPressed: () {
                 //ใส่ฟังก์ชัน Speech to text ตรงนี้
-              ) {},
+              },
               style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              padding: EdgeInsets.all(20),
-  ),
+                shape: CircleBorder(),
+                padding: EdgeInsets.all(20),
+              ),
         )
         ),
       )

@@ -43,7 +43,7 @@ final List<String> buttons = [
 	'2',
 	'3',
 	'+',
-	'?',
+	' ',
 	'0',
 	'.',
 	'=',
@@ -178,7 +178,15 @@ Widget build(BuildContext context) {
 						textColor: Color.fromARGB(255, 255, 255, 255),
 					);
 					}
-				
+
+          /*else if (index == 16) {
+            return MyButton(
+              buttontapped: () {},
+              //child: Icon(Icons.mic, color: Colors.black),
+            );
+					}*/
+
+
 					// Equal_to Button
 					else if (index == 18) {
 					return MyButton(
@@ -239,6 +247,7 @@ bool isOperator(String x) {
   }*/
 	return false;
 }
+
 
 // function to calculate the input operation
 void equalPressed() {
