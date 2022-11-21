@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 // creating Stateless Widget for buttons
 class MyButton extends StatelessWidget {
 
@@ -15,7 +14,7 @@ MyButton({this.color, this.textColor, this.buttonText, this.buttontapped});
 
 @override
 Widget build(BuildContext context) {
-  
+
 	return GestureDetector(
 	  onTap: buttontapped,
 	  child: Padding(
@@ -45,19 +44,25 @@ Widget build(BuildContext context) {
 	return GestureDetector(
 	  onTap: buttontapped,
 	  child: Padding(
-	  	padding: const EdgeInsets.all(6),
-	  	child: MaterialButton(
+	  	padding: const EdgeInsets.all(10),
+      child: ClipRRect(
+	    child: MaterialButton(
         color: color,
         shape: const CircleBorder(),
         onPressed: () {},
         child: Padding(
-          padding: EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           child: Text(
-            buttonText,
-            style: TextStyle(color: textColor, fontSize: 25 ,fontWeight: FontWeight.bold),
+		  	    buttonText,
+		  	    style: TextStyle(
+		  	    color: textColor,
+		  	    fontSize: 25,
+		  	    fontWeight: FontWeight.bold,
+		  	    ),
           ),
-        ),
-	    ),
+	      ),
+      ),
+      ),
     ),
   );
 */
