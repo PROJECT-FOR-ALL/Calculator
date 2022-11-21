@@ -64,35 +64,31 @@ Widget build(BuildContext context) {
 
     backgroundColor: Color(0xFFF1F4F8),
     actions: [
-
-          PopupMenuButton(
-            
-            itemBuilder: (context){
-              return [
-                    PopupMenuItem<int>(
-                        value: 0,
-                        child: Text("Speech",
-                        style: TextStyle(color: Color(0xFF57636C))),
-                    ),
-
-                    PopupMenuItem<int>(
-                        value: 1,
-                        child: Text("Calculator",
-                        style: TextStyle(color: Color(0xFF57636C))),
-                    ),
-
-                ];
-            },
-            onSelected:(value){
-              if(value == 0){
-                  Navigator.push(context,
-                   MaterialPageRoute(builder: (context)=>MyApp()));
-              }else if(value == 1){
-                  Navigator.push(context,
-                   MaterialPageRoute(builder: (context)=>SET()));
-              }
-            }
+    PopupMenuButton(
+      itemBuilder: (context){
+        return [
+          PopupMenuItem<int>(
+              value: 0,
+              child: Text("Speech",
+              style: TextStyle(color: Color(0xFF57636C))),
           ),
+          PopupMenuItem<int>(
+              value: 1,
+              child: Text("Calculator",
+              style: TextStyle(color: Color(0xFF57636C))),
+          ),
+        ];
+      },
+      onSelected:(value){
+        if(value == 0){
+          Navigator.push(context,
+           MaterialPageRoute(builder: (context)=>MyApp()));
+        }else if(value == 1){
+          Navigator.push(context,
+           MaterialPageRoute(builder: (context)=>SET()));
+        }
+      }
+    ),
 
     ],
   ),
