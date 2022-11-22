@@ -34,8 +34,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
   	return Scaffold(
     appBar: AppBar(
+    bottomOpacity: 0.0,
+    elevation: 0.0,
     title: Text(
-      "CalculatorForAll",
+      "",
       style: TextStyle(
         fontSize: 25,
         color: Color(0xFF57636C)
@@ -112,6 +114,7 @@ class _HomePageState extends State<HomePage> {
           
           child: Icon(Icons.mic,size: 200),
               onPressed: () {
+                
                 //ใส่ฟังก์ชัน Speech to text ตรงนี้
               },
               style: ElevatedButton.styleFrom(
@@ -126,4 +129,24 @@ class _HomePageState extends State<HomePage> {
   )
 );
 }
+  void equalPressed() {
+
+    String finaluserinput(String str){
+      str = str.replaceAll('x', '*');
+      str = str.replaceAll('%', '/100*');
+      return str;
+    }
+
+
+  	Parser p = Parser();
+  	Expression exp = p.parse(finaluserinput(userInput));
+
+  	ContextModel cm = ContextModel();
+  	double eval = exp.evaluate(EvaluationType.REAL, cm);
+  	answer = eval.toStringAsFixed(5);
+    //answer = eval.toString();
+  	//answer = j.toString();
+    //toStringAsExponential(3);
+  }
+
 }
