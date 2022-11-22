@@ -25,6 +25,10 @@ class FirstScreen extends State<SET>{
   var userInput = '';
   var answer = '';
 
+static const List<IconData> _iconTypes = [
+  Icons.mic,
+];
+
 // Array of button
 final List<String> buttons = [
 	'AC',
@@ -168,9 +172,7 @@ Widget build(BuildContext context) {
 					return MyButton(
 						buttontapped: () {
 						setState(() {
-
 							userInput += buttons[index];
-
 						});
 						},
 						buttonText: buttons[index],
@@ -179,13 +181,18 @@ Widget build(BuildContext context) {
 					);
 					}
 
-          /*else if (index == 16) {
-            return MyButton(
-              buttontapped: () {},
-              //child: Icon(Icons.mic, color: Colors.black),
+          else if (index == 16) {
+					return IconButton(
+            icon: Icon(Icons.mic,size: 50),
+            onPressed:(){
+            Navigator.push(context, 
+            MaterialPageRoute(builder:(context) => MyApp()),
             );
-					}*/
-
+            },
+          );
+          
+          }
+          
 
 					// Equal_to Button
 					else if (index == 18) {
