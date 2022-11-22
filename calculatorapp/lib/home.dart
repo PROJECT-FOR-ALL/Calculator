@@ -58,13 +58,16 @@ Widget build(BuildContext context) {
 
 	return Scaffold(
 	appBar: AppBar(
+  bottomOpacity: 0.0,
+  elevation: 0.0,
     title: Text(
-      "CalculatorForAll",
+      "",
       style: TextStyle(
         fontSize: 25,
         color: Color(0xFF57636C)
         )
       ),
+      
 
     backgroundColor: Color(0xFFF1F4F8),
     iconTheme: IconThemeData(color: Color(0xFF57636C)),
@@ -97,6 +100,7 @@ Widget build(BuildContext context) {
     ),
 
     ],
+    
   ),
 
 	backgroundColor: Color(0xFFF1F4F8),
