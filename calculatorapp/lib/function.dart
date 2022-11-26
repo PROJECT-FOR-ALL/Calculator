@@ -94,11 +94,11 @@ class FirstScreen extends State<SET> {
                       Container(
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerRight,
-                        //child: FittedBox(
                         child: Text(
                           userInput,
-                          style:
-                              TextStyle(fontSize: 18, color: Color(0xFF57636C)),
+                          style:TextStyle(
+                            fontSize: 18, 
+                            color: Color(0xFF57636C)),
                         ),
                       ),
                       Container(
@@ -115,16 +115,13 @@ class FirstScreen extends State<SET> {
                     ]),
               ),
             ),
-
             Expanded(
               flex: 3,
               child: Container(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                  child: GridView.builder(
+                  GridView.builder(
                       shrinkWrap: true,
                       padding: EdgeInsets.only(left: 24, right: 24),
                       //physics: NeverScrollableScrollPhysics(),
@@ -152,8 +149,23 @@ class FirstScreen extends State<SET> {
                           return MyButton(
                             buttontapped: () {
                               setState(() {
-                                userInput = userInput.substring(
-                                    0, userInput.length - 1);
+                                userInput = userInput.substring(0, userInput.length - 1);
+                                
+                                if(userInput.length > 0 ){
+                                  if (userInput[userInput.length-1]== buttons[15] || 
+                                      userInput[userInput.length-1]== buttons[11] ||
+                                      userInput[userInput.length-1]== buttons[7] ||
+                                      userInput[userInput.length-1]== buttons[3]){
+                                        userInput=userInput;
+                                        //answer = userInput[userInput.length];
+                                      }else{
+                                        equalPressed();
+                                      }
+                                  
+                                  }
+                                else if(userInput.length == 0){
+                                  answer = '0';
+                                  }
                               });
                             },
                             buttonText: buttons[index],
@@ -168,18 +180,21 @@ class FirstScreen extends State<SET> {
                             buttontapped: () {
                               setState(() {
                                 userInput += buttons[index];
+                                equalPressed();
                               });
                             },
                             buttonText: buttons[index],
                             color: Color(0xFF7BCFFF),
                             textColor: Color.fromARGB(255, 255, 255, 255),
                           );
-                        } else if (index == 16) {
-                          return IconButton(
-                            icon: Icon(
-                              Icons.mic,
-                              size: 50,
-                            ),
+                        } 
+
+                        //go to home for mic
+                        else if (index == 16) {
+                          return FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: IconButton(
+                            icon: Icon(Icons.mic,),
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -187,7 +202,8 @@ class FirstScreen extends State<SET> {
                                     builder: (context) => MyApp()),
                               );
                             },
-                          );
+                          )
+                          ); 
                         }
 
                         // Equal_to Button
@@ -196,17 +212,22 @@ class FirstScreen extends State<SET> {
                             buttontapped: () {
                               setState(() {
                                 userInput += '.';
+                                equalPressed();
                               });
                             },
                             buttonText: buttons[index],
                             color: Colors.white,
                             textColor: Color(0xFF101213),
                           );
-                        } else if (index == 19) {
+                        } 
+
+                        //equalbutton
+                        else if (index == 19) {
                           return MyButton(
                             buttontapped: () {
                               setState(() {
                                 equalPressed();
+                                userInput = answer;
                               });
                             },
                             buttonText: buttons[index],
@@ -220,7 +241,13 @@ class FirstScreen extends State<SET> {
                           return MyButton(
                             buttontapped: () {
                               setState(() {
-                                userInput += buttons[index];
+                                if(index == 15 || index == 11 || index == 7 || index == 3){
+                                  userInput += buttons[index];
+                                } else {
+                                  userInput += buttons[index];
+                                  equalPressed();
+                                }
+                                
                               });
                             },
                             buttonText: buttons[index],
@@ -232,9 +259,7 @@ class FirstScreen extends State<SET> {
                                 : Color(0xFF101213),
                           );
                         }
-                      }
-                      ),
-                      )
+                      }),
                 ],
               )),
             ),
@@ -254,19 +279,20 @@ class FirstScreen extends State<SET> {
   }
 
 // function to calculate the input operation
+//เหลือแก้ปัญหา dot
   void equalPressed() {
     String finaluserinput(String str) {
       str = str.replaceAll('x', '*');
-      str = str.replaceAll('%', '/100*');
+      str = str.replaceAll('%', '/100');
       return str;
     }
-
+    String input = userInput;
     Parser p = Parser();
-    Expression exp = p.parse(finaluserinput(userInput));
+    Expression exp = p.parse(finaluserinput(input));
 
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
-    answer = eval.toStringAsFixed(5);
+    answer = eval.toStringAsFixed(4);
 
     //answer = exp.toString();
     //answer = eval.toString();

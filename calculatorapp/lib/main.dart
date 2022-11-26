@@ -8,7 +8,6 @@ void main() {
   runApp(MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -96,7 +95,9 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         backgroundColor: Color(0xFFF1F4F8),
-        body: Column(
+
+        body: LayoutBuilder(builder: (context, constraints){
+          return Column(
           children: <Widget>[
             Expanded(
               //flex: 2,
@@ -107,31 +108,34 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Container(
-                          padding: EdgeInsets.all(20),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            userInput,
-                            style: TextStyle(
-                                fontSize: 18, color: Color(0xFF57636C)),
-                          ),
-                        ),
+                            padding: EdgeInsets.all(20),
+                            alignment: Alignment.centerRight,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                userInput,
+                                style: TextStyle(
+                                    fontSize: 18, color: Color(0xFF57636C)),
+                              ),
+                            )),
                         Container(
-                          padding: EdgeInsets.all(15),
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            answer,
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Color(0xFF101213),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
+                            padding: EdgeInsets.all(15),
+                            alignment: Alignment.centerRight,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                answer,
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Color(0xFF101213),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ))
                       ]),
                 ),
               ),
               //)
             ),
-            
             Expanded(
                 flex: 3,
                 child: Container(
@@ -139,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                       alignment: Alignment.center,
                       child: Padding(
-                          padding: const EdgeInsets.all(40),
+                          padding: const EdgeInsets.all(100),
                           child: ElevatedButton(
                             child: FittedBox(child: Icon(Icons.mic, size: 200)),
                             onPressed: () {
@@ -153,7 +157,9 @@ class _HomePageState extends State<HomePage> {
                           ))),
                 )),
           ],
-        ));
+        );
+        }) 
+        );
   }
 
   void equalPressed() {
