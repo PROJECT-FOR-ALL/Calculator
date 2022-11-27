@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:flutter/services.dart';
 
 class SET extends StatefulWidget {
   @override
@@ -82,23 +83,21 @@ class FirstScreen extends State<SET> {
         ],
       ),
       backgroundColor: Color(0xFFF1F4F8),
-
       body: LayoutBuilder(builder: (context, constraints) {
         return Column(
           children: <Widget>[
             Expanded(
               child: Container(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Container(
                         padding: EdgeInsets.all(10),
                         alignment: Alignment.centerRight,
                         child: Text(
                           userInput,
-                          style:TextStyle(
-                            fontSize: 18, 
-                            color: Color(0xFF57636C)),
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xFF57636C)),
                         ),
                       ),
                       Container(
@@ -118,150 +117,176 @@ class FirstScreen extends State<SET> {
             Expanded(
               flex: 3,
               child: Container(
+                  //color: Color.fromARGB(255, 24, 94, 186),
+                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 5),
                   child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  GridView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(left: 24, right: 24),
-                      //physics: NeverScrollableScrollPhysics(),
-                      itemCount: buttons.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4),
-                      itemBuilder: (BuildContext context, int index) {
-                        // AC = All Clear Button
-                        if (index == 0) {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                userInput = '';
-                                answer = '0';
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: Color(0xFF7BCFFF),
-                            textColor: Color.fromARGB(255, 255, 255, 255),
-                          );
-                        }
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
 
-                        // C = Delete Button
-                        else if (index == 1) {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                userInput = userInput.substring(0, userInput.length - 1);
+                      // ListView.builder(
+                      //     shrinkWrap: true,
+                      //     itemCount: buttons.length,
+                      //     itemBuilder: (BuildContext context, int index) {
+                      //       return Column(children: [
+                      //         Row(
+                      //           mainAxisAlignment:MainAxisAlignment.spaceAround,
                                 
-                                if(userInput.length > 0 ){
-                                  if (userInput[userInput.length-1]== buttons[15] || 
-                                      userInput[userInput.length-1]== buttons[11] ||
-                                      userInput[userInput.length-1]== buttons[7] ||
-                                      userInput[userInput.length-1]== buttons[3]){
-                                        userInput=userInput;
+                      //         )
+                      //       ]);
+                      //     })
+
+                      GridView.builder(
+                          shrinkWrap: true,
+                          //padding: EdgeInsets.zero,
+                          //physics: NeverScrollableScrollPhysics(),
+                          itemCount: buttons.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,crossAxisSpacing: 20.0,mainAxisSpacing: 8.0),
+                          itemBuilder: (BuildContext context, int index) {
+
+                            child: MyButton(buttonsize: 2);
+
+                            // AC = All Clear Button
+                            if (index == 0) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput = '';
+                                    answer = '0';
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Color(0xFF7BCFFF),
+                                textColor: Color.fromARGB(255, 255, 255, 255),
+                              );
+                              //color: Color.fromARGB(255, 54, 186, 24);
+                            }
+
+                            // C = Delete Button
+                            else if (index == 1) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput = userInput.substring(
+                                        0, userInput.length - 1);
+
+                                    if (userInput.length > 0) {
+                                      if (userInput[userInput.length - 1] ==
+                                              buttons[15] ||
+                                          userInput[userInput.length - 1] ==
+                                              buttons[11] ||
+                                          userInput[userInput.length - 1] ==
+                                              buttons[7] ||
+                                          userInput[userInput.length - 1] ==
+                                              buttons[3]) {
+                                        userInput = userInput;
                                         //answer = userInput[userInput.length];
-                                      }else{
+                                      } else {
                                         equalPressed();
                                       }
-                                  
-                                  }
-                                else if(userInput.length == 0){
-                                  answer = '0';
-                                  }
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: Color(0xFF7BCFFF),
-                            textColor: Color.fromARGB(255, 255, 255, 255),
-                          );
-                        }
-
-                        // % Button
-                        else if (index == 2) {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                userInput += buttons[index];
-                                equalPressed();
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: Color(0xFF7BCFFF),
-                            textColor: Color.fromARGB(255, 255, 255, 255),
-                          );
-                        } 
-
-                        //go to home for mic
-                        else if (index == 16) {
-                          return FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: IconButton(
-                            icon: Icon(Icons.mic,),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyApp()),
+                                    } else if (userInput.length == 0) {
+                                      answer = '0';
+                                    }
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Color(0xFF7BCFFF),
+                                textColor: Color.fromARGB(255, 255, 255, 255),
                               );
-                            },
-                          )
-                          ); 
-                        }
+                            }
 
-                        // Equal_to Button
-                        else if (index == 18) {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                userInput += '.';
-                                equalPressed();
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: Colors.white,
-                            textColor: Color(0xFF101213),
-                          );
-                        } 
+                            // % Button
+                            else if (index == 2) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput += buttons[index];
+                                    equalPressed();
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Color(0xFF7BCFFF),
+                                textColor: Color.fromARGB(255, 255, 255, 255),
+                              );
+                            }
 
-                        //equalbutton
-                        else if (index == 19) {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                equalPressed();
-                                userInput = answer;
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: Color(0xFFF8A3EB),
-                            textColor: Colors.white,
-                          );
-                        }
+                            //go to home for mic
+                            else if (index == 16) {
+                              return FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.mic,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MyApp()),
+                                      );
+                                    },
+                                  ));
+                            }
 
-                        // other buttons
-                        else {
-                          return MyButton(
-                            buttontapped: () {
-                              setState(() {
-                                if(index == 15 || index == 11 || index == 7 || index == 3){
-                                  userInput += buttons[index];
-                                } else {
-                                  userInput += buttons[index];
-                                  equalPressed();
-                                }
-                                
-                              });
-                            },
-                            buttonText: buttons[index],
-                            color: isOperator(buttons[index])
-                                ? Color(0xFFF8A3EB)
-                                : Colors.white,
-                            textColor: isOperator(buttons[index])
-                                ? Colors.white
-                                : Color(0xFF101213),
-                          );
-                        }
-                      }),
-                ],
-              )),
+                            // Equal_to Button
+                            else if (index == 18) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    userInput += '.';
+                                    equalPressed();
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Colors.white,
+                                textColor: Color(0xFF101213),
+                              );
+                            }
+
+                            //answer
+                            else if (index == 19) {
+                              return MyButton(
+                                buttontapped: () {
+                                  setState(() {
+                                    equalPressed();
+                                    userInput = answer;
+                                  });
+                                },
+                                buttonText: buttons[index],
+                                color: Color(0xFFF8A3EB),
+                                textColor: Colors.white,
+                              );
+                            }
+
+                            // other buttons
+                            else {
+                              return MyButton(
+                                buttontapped:(){
+                                  setState(() {
+                                    if (index == 15 ||
+                                        index == 11 ||
+                                        index == 7 ||
+                                        index == 3) {
+                                      userInput += buttons[index];
+                                    } else {
+                                      userInput += buttons[index];
+                                      equalPressed();
+                                    }
+                                  });
+                                } ,
+                                buttonText: buttons[index],
+                                color: isOperator(buttons[index])
+                                    ? Color(0xFFF8A3EB)
+                                    : Colors.white,
+                                textColor: isOperator(buttons[index])
+                                    ? Colors.white
+                                    : Color(0xFF101213),
+
+                              );
+                            }
+                          }),
+                    ],
+                  )),
             ),
           ],
         );
@@ -286,6 +311,7 @@ class FirstScreen extends State<SET> {
       str = str.replaceAll('%', '/100');
       return str;
     }
+
     String input = userInput;
     Parser p = Parser();
     Expression exp = p.parse(finaluserinput(input));
