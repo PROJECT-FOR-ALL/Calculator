@@ -1,12 +1,10 @@
-import 'botton.dart';
-import 'home.dart';
+import 'function.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_speech/google_speech.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sound_stream/sound_stream.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 void main() {
@@ -22,6 +20,34 @@ class MyApp extends StatelessWidget {
     ); // MaterialApp
   }
 }
+/*
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('GridView Demo')),
+      body: LayoutBuilder(
+        builder: (context, constraints) => GridView.count(
+          childAspectRatio: constraints.biggest.aspectRatio * 10 / 4,
+          shrinkWrap: true,
+          crossAxisCount: 4,
+          physics: NeverScrollableScrollPhysics(),
+          children: List.generate(
+            40,
+            (index) => Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Container(
+                color: Color.fromARGB(255, 152, 30, 30),
+                child: Text('data'),
+              )
+            ),
+          ).toList(),
+        ),
+      ),
+    );
+  }
+}
+*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -72,7 +98,7 @@ class _HomePageState extends State<HomePage> {
           data.results.map((e) => e.alternatives.first.transcript).join('\n');
 
       if (data.results.first.isFinal) {
-        responseText += '\n' + currentText;
+        responseText += '\n$currentText';
         setState(() {
           text = responseText;
           recognizeFinished = true;
@@ -110,7 +136,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("CalculatorForAll",
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+          title: Text("",
               style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
           backgroundColor: Color(0xFFF1F4F8),
           iconTheme: IconThemeData(color: Color(0xFF57636C)),
@@ -143,53 +171,90 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         backgroundColor: Color(0xFFF1F4F8),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Container(
-                        padding: EdgeInsets.all(20),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          responseText,
-                          style:
-                              TextStyle(fontSize: 18, color: Color(0xFF57636C)),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          answer,
-                          style: TextStyle(
-                              fontSize: 30,
-                              color: Color(0xFF101213),
-                              fontWeight: FontWeight.bold),
-                        ),
-                      )
-                    ]),
-              ),
-            ),
-            Expanded(
+        body: LayoutBuilder(builder: (context, constraints) {
+          return Column(
+            children: <Widget>[
+              Expanded(
+                //flex: 2,
+                //child: FittedBox(
                 child: Container(
-              child: Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  child: Icon(Icons.mic, size: 100),
-                  onPressed:
-                      //ใส่ฟังก์ชัน Speech to text ตรงนี้
-                      recognizing ? stopRecording : streamingRecognize,
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    padding: EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                              padding: EdgeInsets.all(20),
+                              alignment: Alignment.centerRight,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  responseText,
+                                  style: TextStyle(
+                                      fontSize: 18, color: Color(0xFF57636C)),
+                                ),
+                              )),
+                          Container(
+                              padding: EdgeInsets.all(15),
+                              alignment: Alignment.centerRight,
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  answer,
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      color: Color(0xFF101213),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ))
+                        ]),
                   ),
                 ),
+                //)
               ),
-            )),
-          ],
-        ));
+              Expanded(
+                  flex: 3,
+                  child: Container(
+                    //color: Colors.blue,
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                            padding: const EdgeInsets.all(100),
+                            child: ElevatedButton(
+                              child:
+                                  FittedBox(child: Icon(Icons.mic, size: 200)),
+                              onPressed: () {
+                                //ใส่ฟังก์ชัน Speech to text ตรงนี้
+                                recognizing
+                                    ? stopRecording
+                                    : streamingRecognize;
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF7BCFFF),
+                                shape: CircleBorder(),
+                                padding: EdgeInsets.all(20),
+                              ),
+                            ))),
+                  )),
+            ],
+          );
+        }));
+  }
+
+  void equalPressed() {
+    String finaluserinput(String str) {
+      str = str.replaceAll('x', '*');
+      str = str.replaceAll('%', '/100*');
+      return str;
+    }
+
+    Parser p = Parser();
+    Expression exp = p.parse(finaluserinput(userInput));
+
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+    answer = eval.toStringAsFixed(5);
+    //answer = eval.toString();
+    //answer = j.toString();
+    //toStringAsExponential(3);
   }
 }
