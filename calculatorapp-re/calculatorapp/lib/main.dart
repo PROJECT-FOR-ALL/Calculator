@@ -22,34 +22,6 @@ class MyApp extends StatelessWidget {
     ); // MaterialApp
   }
 }
-/*
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('GridView Demo')),
-      body: LayoutBuilder(
-        builder: (context, constraints) => GridView.count(
-          childAspectRatio: constraints.biggest.aspectRatio * 10 / 4,
-          shrinkWrap: true,
-          crossAxisCount: 4,
-          physics: NeverScrollableScrollPhysics(),
-          children: List.generate(
-            40,
-            (index) => Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                color: Color.fromARGB(255, 152, 30, 30),
-                child: Text('data'),
-              )
-            ),
-          ).toList(),
-        ),
-      ),
-    );
-  }
-}
-*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -187,19 +159,17 @@ class _HomePageState extends State<HomePage> {
                           Container(
                               padding: EdgeInsets.all(20),
                               alignment: Alignment.centerRight,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
+                              
                                 child: Text(
                                   responseText.toString(),
                                   style: TextStyle(
                                       fontSize: 18, color: Color(0xFF57636C)),
                                 ),
-                              )),
+                              ),
                           Container(
                               padding: EdgeInsets.all(15),
                               alignment: Alignment.centerRight,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
+                              
                                 child: Text(
                                   answer,
                                   style: TextStyle(
@@ -207,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                                       color: Color(0xFF101213),
                                       fontWeight: FontWeight.bold),
                                 ),
-                              ))
+                              )
                         ]),
                   ),
                 ),
