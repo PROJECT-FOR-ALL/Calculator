@@ -1,25 +1,19 @@
 import 'botton.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:sizer/sizer.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:math_expressions/math_expressions.dart';
-import 'package:flutter/services.dart';
 
 class SET extends StatefulWidget {
+  const SET({super.key});
+
   @override
   FirstScreen createState() => FirstScreen();
 }
 
 class FirstScreen extends State<SET> {
-  @override
   var userInput = '';
   var answer = '';
 
-  static const List<IconData> _iconTypes = [
-    Icons.mic,
-  ];
 
 // Array of button
   final List<String> buttons = [
@@ -52,20 +46,20 @@ class FirstScreen extends State<SET> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         title:
-            Text("", style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
-        backgroundColor: Color(0xFFF1F4F8),
-        iconTheme: IconThemeData(color: Color(0xFF57636C)),
+            const Text("", style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
+        backgroundColor: const Color(0xFFF1F4F8),
+        iconTheme: const IconThemeData(color: Color(0xFF57636C)),
         actions: [
           PopupMenuButton(
               //icon: Icon(Icons.more_vert,color: Color(0xFF57636C)),
               itemBuilder: (context) {
             return [
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 0,
                 child:
                     Text("Speech", style: TextStyle(color: Color(0xFF57636C))),
               ),
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 1,
                 child: Text("Calculator",
                     style: TextStyle(color: Color(0xFF57636C))),
@@ -77,12 +71,12 @@ class FirstScreen extends State<SET> {
                   context, MaterialPageRoute(builder: (context) => MyApp()));
             } else if (value == 1) {
               Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => SET()));
+                  context, MaterialPageRoute(builder: (context) => const SET()));
             }
           }),
         ],
       ),
-      backgroundColor: Color(0xFFF1F4F8),
+      backgroundColor: const Color(0xFFF1F4F8),
       body: LayoutBuilder(builder: (context, constraints) {
         return Column(
           children: <Widget>[
@@ -92,20 +86,20 @@ class FirstScreen extends State<SET> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         alignment: Alignment.centerRight,
                         child: Text(
                           userInput,
                           style:
-                              TextStyle(fontSize: 18, color: Color(0xFF57636C)),
+                              const TextStyle(fontSize: 18, color: Color(0xFF57636C)),
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         alignment: Alignment.centerRight,
                         child: Text(
                           answer,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 30,
                               color: Color(0xFF101213),
                               fontWeight: FontWeight.bold),
@@ -118,20 +112,10 @@ class FirstScreen extends State<SET> {
               flex: 3,
               child: Container(
                   //color: Color.fromARGB(255, 24, 94, 186),
-                  padding: EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      // ListView.builder(
-                      //     shrinkWrap: true,
-                      //     itemCount: buttons.length,
-                      //     itemBuilder: (BuildContext context, int index) {
-                      //       return Column(children: [
-                      //         Row(
-                      //           mainAxisAlignment:MainAxisAlignment.spaceAround,
-                      //         )
-                      //       ]);
-                      //     })
 
                       GridView.builder(
                           shrinkWrap: true,
@@ -139,14 +123,14 @@ class FirstScreen extends State<SET> {
                           //physics: NeverScrollableScrollPhysics(),
                           itemCount: buttons.length,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 4,
                                   crossAxisSpacing: 20.0,
                                   mainAxisSpacing: 8.0),
                           itemBuilder: (BuildContext context, int index) {
-                            child:
+                            
                             MyButton(buttonsize: 2);
-
+                            
                             // AC = All Clear Button
                             if (index == 0) {
                               return MyButton(

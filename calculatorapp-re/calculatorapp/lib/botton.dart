@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // creating Stateless Widget for buttons
 class MyButton extends StatelessWidget {
@@ -53,11 +54,12 @@ class MyButton extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               buttonText,
-              style: TextStyle(
+              style: GoogleFonts.sourceCodePro(
+                textStyle: TextStyle(
                 color: textColor,
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-              ),
+              ),),
             ),
           )),
         ),
