@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 // creating Stateless Widget for buttons
 class MyButton extends StatelessWidget {
@@ -23,28 +25,6 @@ class MyButton extends StatelessWidget {
       onTap: buttontapped,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(600),
-//             child: SizedBox(
-//               width: 8,
-//               height: 8,
-//               child: ElevatedButton(
-//                   onPressed: () => buttontapped,
-//                   child: Center(
-//                       child: FittedBox(
-//                     fit: BoxFit.scaleDown,
-//                     child: Text(
-//                       buttonText,
-//                       style: TextStyle(
-//                         color: textColor,
-//                         fontSize: 25,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                   ))
-//                   ,style: ElevatedButton.styleFrom(backgroundColor: color),
-//                  ),
-//             )));
-//   }
-// }
 
         child: Container(
           color: color,
@@ -53,15 +33,45 @@ class MyButton extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               buttonText,
-              style: TextStyle(
+              style: GoogleFonts.sourceCodePro(
+                textStyle: TextStyle(
                 color: textColor,
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
-              ),
+              )
+              )
+              ,
             ),
           )),
         ),
       ),
     );
+
+    // return Container(
+    //   margin: EdgeInsets.all(10.0),
+    //   child: SizedBox(
+    //     width: 70,
+    //     height: 70,
+    //     child: ElevatedButton(
+    //       child: Text(
+    //           buttonText,
+    //           style: GoogleFonts.sourceCodePro(
+    //             textStyle: TextStyle(
+    //             color: textColor,
+    //             fontSize: 25,
+    //             fontWeight: FontWeight.bold,
+    //           )
+    //           )
+    //           ,
+    //         ),
+    //       onPressed: () {},
+    //       style: ElevatedButton.styleFrom(
+    //         primary: Color(0xFF7BCFFF),
+    //         shape: CircleBorder(),
+    //         padding: EdgeInsets.all(20),
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
