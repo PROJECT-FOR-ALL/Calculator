@@ -2,6 +2,8 @@ import 'botton.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'package:math_expressions/math_expressions.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 
 class SET extends StatefulWidget {
   @override
@@ -48,7 +50,7 @@ class FirstScreen extends State<SET> {
         bottomOpacity: 0.0,
         elevation: 0.0,
         title:
-            Text("", style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
+            Text("gg", style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
         backgroundColor: Color(0xFFF1F4F8),
         iconTheme: IconThemeData(color: Color(0xFF57636C)),
         actions: [
@@ -118,13 +120,56 @@ class FirstScreen extends State<SET> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
+
                       // ListView.builder(
                       //     shrinkWrap: true,
                       //     itemCount: buttons.length,
                       //     itemBuilder: (BuildContext context, int index) {
                       //       return Column(children: [
                       //         Row(
-                      //           mainAxisAlignment:MainAxisAlignment.spaceAround,
+                      //           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             MyButton(buttonText:buttons[0]),
+                      //             MyButton(buttonText:buttons[1]),
+                      //             MyButton(buttonText:buttons[2]),
+                      //             MyButton(buttonText:buttons[3])
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             MyButton(buttonText:buttons[4]),
+                      //             MyButton(buttonText:buttons[5]),
+                      //             MyButton(buttonText:buttons[6]),
+                      //             MyButton(buttonText:buttons[7])
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             MyButton(buttonText:buttons[8]),
+                      //             MyButton(buttonText:buttons[9]),
+                      //             MyButton(buttonText:buttons[10]),
+                      //             MyButton(buttonText:buttons[11])
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             MyButton(buttonText:buttons[12]),
+                      //             MyButton(buttonText:buttons[13]),
+                      //             MyButton(buttonText:buttons[14]),
+                      //             MyButton(buttonText:buttons[15])
+                      //           ],
+                      //         ),
+                      //         Row(
+                      //           mainAxisAlignment:MainAxisAlignment.spaceEvenly,
+                      //           children: [
+                      //             MyButton(buttonText:buttons[16]),
+                      //             MyButton(buttonText:buttons[17]),
+                      //             MyButton(buttonText:buttons[18]),
+                      //             MyButton(buttonText:buttons[19])
+                      //           ],
                       //         )
                       //       ]);
                       //     })

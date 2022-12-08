@@ -22,34 +22,6 @@ class MyApp extends StatelessWidget {
     ); // MaterialApp
   }
 }
-/*
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('GridView Demo')),
-      body: LayoutBuilder(
-        builder: (context, constraints) => GridView.count(
-          childAspectRatio: constraints.biggest.aspectRatio * 10 / 4,
-          shrinkWrap: true,
-          crossAxisCount: 4,
-          physics: NeverScrollableScrollPhysics(),
-          children: List.generate(
-            40,
-            (index) => Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                color: Color.fromARGB(255, 152, 30, 30),
-                child: Text('data'),
-              )
-            ),
-          ).toList(),
-        ),
-      ),
-    );
-  }
-}
-*/
 
 class HomePage extends StatefulWidget {
   @override
@@ -58,15 +30,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  var responseText = '';
+  //var userInput = '0000';
+  var answer = '0';
+
   void initState() {
     super.initState();
 
     _recorder.initialize();
   }
 
-  var userInput = '0000';
-  var responseText = '';
-  var answer = '00000';
   final RecorderStream _recorder = RecorderStream();
   bool recognizing = false;
   bool recognizeFinished = false;
@@ -75,6 +48,7 @@ class _HomePageState extends State<HomePage> {
   BehaviorSubject<List<int>>? _audioStream;
 
   void streamingRecognize() async {
+    // responseText = '';
     _audioStream = BehaviorSubject<List<int>>();
     _audioStreamSubscription = _recorder.audioStream.listen((event) {
       _audioStream!.add(event);
@@ -96,22 +70,39 @@ class _HomePageState extends State<HomePage> {
 
     responseStream.listen((data) {
       final currentText =
-          data.results.map((e) => e.alternatives.first.transcript).join('\n');
+          data.results.map((e) => e.alternatives.first.transcript).join(' ');
 
       if (data.results.first.isFinal) {
-        responseText += '\n' + currentText;
+        responseText += '' + currentText;
         setState(() {
           text = responseText;
           recognizeFinished = true;
+          // equalPressed();
         });
       } else {
         setState(() {
-          text = responseText + '\n' + currentText;
+          text = responseText + '' + currentText;
           recognizeFinished = true;
         });
       }
+      print(responseText);
+      final splitted = responseText.split(new RegExp(r'(ทั้งหมด)|(ถังหมด)'));
+      String result = "";
+      for (var i = 1; i < splitted.length; i++) {
+        result = result + "(";
+      }
+      result = result + splitted.map((val) => val.trim()).join(')');
+      result = result.replaceAll("หาร", '/');
+      result = result.replaceAll("คูณ", '*');
+      result = result.replaceAll("บวก", '+');
+      result = result.replaceAll("ลบ", '-');
+      result = result.replaceAll(new RegExp(r'(เปิดเน็ต)|(เปอร์เซ็นต์)'), '%');
+      result = result.replaceAll(new RegExp(r'(%ของ)|(% ของ)'), '/100*');
+      responseText = result.replaceAll(new RegExp(r'[^\d\+\-\*/\%()]'), '');
+      print(responseText);
     }, onDone: () {
       setState(() {
+        equalPressed();
         recognizing = false;
       });
     });
@@ -185,29 +176,25 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           Container(
-                              padding: EdgeInsets.all(20),
-                              alignment: Alignment.centerRight,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  responseText.toString(),
-                                  style: TextStyle(
-                                      fontSize: 18, color: Color(0xFF57636C)),
-                                ),
-                              )),
+                            padding: EdgeInsets.all(20),
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              responseText.toString(),
+                              style: TextStyle(
+                                  fontSize: 18, color: Color(0xFF57636C)),
+                            ),
+                          ),
                           Container(
-                              padding: EdgeInsets.all(15),
-                              alignment: Alignment.centerRight,
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-                                  answer,
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      color: Color(0xFF101213),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ))
+                            padding: EdgeInsets.all(15),
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              answer,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Color(0xFF101213),
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
                         ]),
                   ),
                 ),
@@ -247,16 +234,19 @@ class _HomePageState extends State<HomePage> {
   void equalPressed() {
     String finaluserinput(String str) {
       str = str.replaceAll('x', '*');
-      str = str.replaceAll('%', '/100*');
+      str = str.replaceAll('%', '/100');
       return str;
     }
 
+    String input = responseText;
     Parser p = Parser();
-    Expression exp = p.parse(finaluserinput(userInput));
+    Expression exp = p.parse(finaluserinput(input));
 
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
-    answer = eval.toStringAsFixed(5);
+    answer = eval.toStringAsFixed(4);
+
+    //answer = exp.toString();
     //answer = eval.toString();
     //answer = j.toString();
     //toStringAsExponential(3);
