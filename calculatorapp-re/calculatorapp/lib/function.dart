@@ -13,7 +13,14 @@ class SET extends StatefulWidget {
 class FirstScreen extends State<SET> {
   var userInput = '';
   var answer = '';
+  int _selectedIndex = 0;
 
+  void _onItemTapped(int index) {
+
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
 // Array of button
   final List<String> buttons = [
@@ -41,12 +48,35 @@ class FirstScreen extends State<SET> {
 
   @override
   Widget build(BuildContext context) {
+
+    final mediaQuery = MediaQuery.of(context);
+    
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.mic),
+            label: 'Voice',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calculate),
+            label: 'Calculate',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xFF57636C),
+        unselectedItemColor: Color(0xFF57636C),
+        type: BottomNavigationBarType.shifting,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+        //selectedFontSize: 15,
+        onTap: _onItemTapped,
+      ),
+
       appBar: AppBar(
         bottomOpacity: 0.0,
         elevation: 0.0,
-        title:
-            const Text("", style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
+        title: const Text("",
+            style: TextStyle(fontSize: 25, color: Color(0xFF57636C))),
         backgroundColor: const Color(0xFFF1F4F8),
         iconTheme: const IconThemeData(color: Color(0xFF57636C)),
         actions: [
@@ -70,8 +100,8 @@ class FirstScreen extends State<SET> {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => MyApp()));
             } else if (value == 1) {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const SET()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const SET()));
             }
           }),
         ],
@@ -90,8 +120,8 @@ class FirstScreen extends State<SET> {
                         alignment: Alignment.centerRight,
                         child: Text(
                           userInput,
-                          style:
-                              const TextStyle(fontSize: 18, color: Color(0xFF57636C)),
+                          style: const TextStyle(
+                              fontSize: 18, color: Color(0xFF57636C)),
                         ),
                       ),
                       Container(
@@ -112,15 +142,15 @@ class FirstScreen extends State<SET> {
               flex: 3,
               child: Container(
                   //color: Color.fromARGB(255, 24, 94, 186),
-                  padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-
                       GridView.builder(
                           shrinkWrap: true,
-                          //padding: EdgeInsets.zero,
-                          //physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          physics: NeverScrollableScrollPhysics(),
                           itemCount: buttons.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,9 +158,8 @@ class FirstScreen extends State<SET> {
                                   crossAxisSpacing: 20.0,
                                   mainAxisSpacing: 8.0),
                           itemBuilder: (BuildContext context, int index) {
-                            
                             MyButton(buttonsize: 2);
-                            
+
                             // AC = All Clear Button
                             if (index == 0) {
                               return MyButton(
@@ -272,6 +301,13 @@ class FirstScreen extends State<SET> {
                     ],
                   )),
             ),
+
+            // const Expanded(
+            //   //flex: 1,
+            //   child: Container(
+
+            //   )
+            // ),
           ],
         );
       }),
@@ -281,15 +317,22 @@ class FirstScreen extends State<SET> {
   bool isOperator(String x) {
     if (x == '/' || x == 'x' || x == '-' || x == '+' || x == '=') {
       return true;
-    } /*else if( x == '?'){
-    userInput = '4';
-  }*/
+    }
     return false;
   }
 
 // function to calculate the input operation
 //เหลือแก้ปัญหา dot
   void equalPressed() {
+    userInput = userInput.replaceAll('x.', 'x');
+    userInput = userInput.replaceAll('+.', '+');
+    userInput = userInput.replaceAll('-.', '-');
+    userInput = userInput.replaceAll('/.', '/');
+    userInput = userInput.replaceAll('%.', '&');
+    userInput = userInput.replaceAll('=.', '');
+    userInput = userInput.replaceAll('..', '.');
+    userInput = userInput.replaceAll(' . ', '');
+
     String finaluserinput(String str) {
       str = str.replaceAll('x', '*');
       str = str.replaceAll('%', '/100');
@@ -299,7 +342,6 @@ class FirstScreen extends State<SET> {
     String input = userInput;
     Parser p = Parser();
     Expression exp = p.parse(finaluserinput(input));
-
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     answer = eval.toStringAsFixed(4);
