@@ -196,10 +196,10 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.calculate),
               label: 'Calculator',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.history),
-            //   label: 'History',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              label: 'History',
+            ),
           ],
           onTap: (index) {
             _pageController.animateToPage(index,
