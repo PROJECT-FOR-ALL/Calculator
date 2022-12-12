@@ -8,6 +8,11 @@ import 'package:google_speech/google_speech.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sound_stream/sound_stream.dart';
 import 'dart:async';
+import 'package:calculatorapp/TextToSpeechAPI.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
 
 void main() {
   runApp(MyApp());
@@ -30,13 +35,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  var responseText = '';
+  var responseText = '0';
   //var userInput = '0000';
   var answer = '0';
-
   void initState() {
     super.initState();
-
+    synthesizeText(
+        "สวัสดียินดีต้อนรับสู่ Voice Calculator ค่ะ เพื่อเริ่มต้นใช้งาน ท่านสามารถแตะปุ่มกลางหน้าจอและรอสัญญาณได้เลยค่ะ",
+        '');
     _recorder.initialize();
   }
 
@@ -46,14 +52,33 @@ class _HomePageState extends State<HomePage> {
   String text = '';
   StreamSubscription<List<int>>? _audioStreamSubscription;
   BehaviorSubject<List<int>>? _audioStream;
+  AudioPlayer audioPlugin = AudioPlayer();
+
+  void synthesizeText(String text, String name) async {
+    if (audioPlugin.state == PlayerState.playing) {
+      await audioPlugin.stop();
+    }
+    // Hard coding the voice related settings
+    final String audioContent = await TextToSpeechAPI()
+        .synthesizeText(text, 'th-TH-Standard-A', 'th-TH');
+    if (audioContent == null) return;
+    final bytes = Base64Decoder().convert(audioContent, 0, audioContent.length);
+    final dir = await getTemporaryDirectory();
+    final file = File('${dir.path}/wavenet.mp3');
+    final mp3Uri = file.uri.toString();
+    await file.writeAsBytes(bytes);
+    await audioPlugin.play(UrlSource(mp3Uri));
+  }
 
   void streamingRecognize() async {
+    String text = '';
     // responseText = '';
+    synthesizeText("เริ่มตรวจจับเสียง", '');
     _audioStream = BehaviorSubject<List<int>>();
     _audioStreamSubscription = _recorder.audioStream.listen((event) {
       _audioStream!.add(event);
     });
-
+    responseText = answer.toString();
     await _recorder.start();
 
     setState(() {
@@ -70,36 +95,61 @@ class _HomePageState extends State<HomePage> {
 
     responseStream.listen((data) {
       final currentText =
-          data.results.map((e) => e.alternatives.first.transcript).join(' ');
-
+          data.results.map((e) => e.alternatives.first.transcript).join('');
+      print(data.results);
       if (data.results.first.isFinal) {
-        responseText += '' + currentText;
+        text = '' + currentText;
+        print("isFinal : " + text);
         setState(() {
-          text = responseText;
+          // print("isFinal text : " + text);
+          print(text);
+          text = text.replaceAll(
+              RegExp(r'(บวกลบ)|(บวก\D*ลบ)|(\+\-) |(\+ \-)'), '-');
+          text = text.replaceAll(
+              RegExp(r'(ลบบวก)|(ลบ\D*บวก)|(\-\+) |(\- \+)'), '-');
+          text = text.replaceAll(RegExp(r'(หาร)|([/])'), ')/');
+          text = text.replaceAll(RegExp(r'(คูณ)|([\*])'), ')*');
+          text = text.replaceAll(RegExp(r'(บวก)|([\+])'), ')+');
+          text = text.replaceAll(RegExp(r'(ลบ)|([\-])'), ')-');
+          text = text.replaceAll(RegExp(r'(เปิดเน็ต)|(เปอร์เซ็นต์)'), '%');
+          text = text.replaceAll(RegExp(r'(%ของ)|(% ของ)'), '%)*');
+          final splitted = text.split(RegExp(r'(ทั้งหมด)|(ถังหมด)'));
+          final splittall = text.split(RegExp(r'[\+\-\*/]'));
+          String result = "";
+
+          for (var i = 1; i < (splitted.length + splittall.length); i++) {
+            result = result + "(";
+          }
+          if (splittall.first.contains(RegExp(r'[\d]'))) {
+            responseText = '';
+          } else {
+            result += responseText;
+          }
+
+          result = result + splitted.map((val) => val.trim()).join(')');
+          print(result);
+
+          // result = result.replaceAll(new RegExp(r'%'), '/100');
+          result = result.replaceAll(new RegExp(r'[^\d\+\-\*/\%().]'), '');
+
+          int a = 0;
+          // if
+          // for (var i in splittall) {
+
+          // }
+
+          print(responseText);
+          responseText = result + ')';
           recognizeFinished = true;
           // equalPressed();
         });
       } else {
         setState(() {
-          text = responseText + '' + currentText;
+          text = currentText;
           recognizeFinished = true;
         });
+        print("NOTFinal : " + text);
       }
-      print(responseText);
-      final splitted = responseText.split(new RegExp(r'(ทั้งหมด)|(ถังหมด)'));
-      String result = "";
-      for (var i = 1; i < splitted.length; i++) {
-        result = result + "(";
-      }
-      result = result + splitted.map((val) => val.trim()).join(')');
-      result = result.replaceAll("หาร", '/');
-      result = result.replaceAll("คูณ", '*');
-      result = result.replaceAll("บวก", '+');
-      result = result.replaceAll("ลบ", '-');
-      result = result.replaceAll(new RegExp(r'(เปิดเน็ต)|(เปอร์เซ็นต์)'), '%');
-      result = result.replaceAll(new RegExp(r'(%ของ)|(% ของ)'), '/100*');
-      responseText = result.replaceAll(new RegExp(r'[^\d\+\-\*/\%()]'), '');
-      print(responseText);
     }, onDone: () {
       setState(() {
         equalPressed();
@@ -239,16 +289,37 @@ class _HomePageState extends State<HomePage> {
     }
 
     String input = responseText;
+    print(input);
     Parser p = Parser();
     Expression exp = p.parse(finaluserinput(input));
 
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     answer = eval.toStringAsFixed(4);
+    // synthesizeText(text, '');
+    // synthesizeText(input + 'เท่ากับ ', 'A');
+    if (eval % 1 == 0) {
+      // ftts.speak(eval.toStringAsFixed(0));
 
+      synthesizeText(
+          voiceSense(input + 'ดังนั้นจะ = ' + eval.toStringAsFixed(0)), 'A');
+    } else {
+      synthesizeText(voiceSense(input + 'ดังนั้นจะ = ' + eval.toString()), 'B');
+      // ftts.speak(eval.toString());
+    }
     //answer = exp.toString();
     //answer = eval.toString();
     //answer = j.toString();
     //toStringAsExponential(3);
+  }
+
+  String voiceSense(String inputs) {
+    inputs = inputs.replaceAll(')', 'แล้ว');
+    inputs = inputs.replaceAll('/', 'หารด้วย');
+    inputs = inputs.replaceAll('*', 'คูณด้วย');
+    inputs = inputs.replaceAll('+', 'บวกด้วย');
+    inputs = inputs.replaceAll('-', 'ลบด้วย');
+    print(inputs);
+    return inputs;
   }
 }
