@@ -177,6 +177,12 @@ class Voice extends State<PageVoice> {
                                 shape: CircleBorder(),
                                 padding: EdgeInsets.all(20),
                               ),
+
+                              onLongPress: () {setState(() {
+                                responseText = '0';
+                                answer = '0';
+                              });},
+
                             ))),
                   )),
             ],
@@ -198,5 +204,7 @@ class Voice extends State<PageVoice> {
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     answer = eval.toStringAsFixed(4);
+
+    print('สมการ exp' + exp.toString());
   }
 }
