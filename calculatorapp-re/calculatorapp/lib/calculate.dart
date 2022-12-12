@@ -307,11 +307,11 @@ class Calculate extends State<PageCalculate> {
                                           equalPressed();
                                           // list.add(userInput);
                                           // print(list);
-                                          Navigator.push(context,
-                                            MaterialPageRoute(
-                                              builder: (context) => PageHistory(history: userInput)
-                                            )
-                                          );
+                                          // Navigator.push(context,
+                                          //   MaterialPageRoute(
+                                          //     builder: (context) => PageHistory(history: userInput)
+                                          //   )
+                                          // );
                                           
 
                                           userInput =
