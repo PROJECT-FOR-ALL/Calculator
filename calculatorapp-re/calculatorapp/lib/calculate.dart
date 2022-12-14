@@ -25,9 +25,6 @@ class Calculate extends State<PageCalculate> {
     super.initState();
     print(widget.list);
   }
-  //final list = <BasicTile> [];
-
-  //var entries;
 
   final TextEditingController _controller = TextEditingController();
 
@@ -58,335 +55,283 @@ class Calculate extends State<PageCalculate> {
   @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: const Color(0xFFF1F4F8),
-      body: PageView(
-          //scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            LayoutBuilder(builder: (context, constraints) {
-              return Column(
-                children: <Widget>[
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  //   child: ExpansionTileCard(
-                  //     title: Text('History'),
-                  //     //subtitle: Text('I expand!'),
-                  //     children: <Widget>[
-                  //       Divider(
-                  //         thickness: 1.0,
-                  //         //height: 50.0,
-                  //       ),
-                  //       Align(
-                  //         alignment: Alignment.centerLeft,
-                  //         child: Padding(
-                  //           padding: const EdgeInsets.symmetric(
-                  //             horizontal: 16.0,
-                  //             vertical: 10.0,
-                  //           ),
-                  //           child: Text(list[0]),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
-                  Expanded(
-                    child: Container(
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Container(
-                                padding: const EdgeInsets.all(10),
-                                alignment: Alignment.centerRight,
-                                child: TextField(
-                                    controller: _controller,
-                                    showCursor: true,
-                                    readOnly: true,
-                                    textAlign: TextAlign.end,
-                                    decoration:
-                                        InputDecoration.collapsed(hintText: ""))
-                                // Text(
-                                //   userInput,
-                                //   style: const TextStyle(
-                                //       fontSize: 18, color: Color(0xFF57636C)),
-                                // ),
-                                ),
-                            Container(
-                              padding: const EdgeInsets.all(15),
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                answer,
-                                style: const TextStyle(
-                                    fontSize: 30,
-                                    color: Color(0xFF101213),
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ]),
-                    ),
-                  ),
-                  Expanded(
-                    flex: 3,
-                    child: Container(
-                        //color: Color.fromARGB(255, 24, 94, 186),
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, bottom: 10),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            GridView.builder(
-                                shrinkWrap: true,
-                                padding: EdgeInsets.zero,
-                                physics: ScrollPhysics(),
-                                //physics: FixedExtentScrollPhysics(),
-                                itemCount: buttons.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 4,
-                                        crossAxisSpacing: 20.0,
-                                        mainAxisSpacing: 8.0),
-                                itemBuilder: (BuildContext context, int index) {
-                                  MyButton(buttonsize: 2);
+      body: PageView(children: <Widget>[
+        LayoutBuilder(builder: (context, constraints) {
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        Container(
+                            padding: const EdgeInsets.all(10),
+                            alignment: Alignment.centerRight,
+                            child: TextField(
+                                controller: _controller,
+                                showCursor: true,
+                                readOnly: true,
+                                textAlign: TextAlign.end,
+                                decoration:
+                                    InputDecoration.collapsed(hintText: ""))),
+                        Container(
+                          padding: const EdgeInsets.all(15),
+                          alignment: Alignment.centerRight,
+                          child: Text(
+                            answer,
+                            style: const TextStyle(
+                                fontSize: 30,
+                                color: Color(0xFF101213),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      ]),
+                ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Container(
+                    //color: Color.fromARGB(255, 24, 94, 186),
+                    padding:
+                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        GridView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: ScrollPhysics(),
+                            //physics: FixedExtentScrollPhysics(),
+                            itemCount: buttons.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 4,
+                                    crossAxisSpacing: 20.0,
+                                    mainAxisSpacing: 8.0),
+                            itemBuilder: (BuildContext context, int index) {
+                              MyButton(buttonsize: 2);
 
-                                  // AC = All Clear Button
-                                  if (index == 0) {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
-                                          userInput = '0';
-                                          answer = '0';
-                                        });
-                                        final updatedText = userInput;
-                                        _controller.value =
-                                            _controller.value.copyWith(
-                                          text: updatedText,
-                                          selection: TextSelection.collapsed(
-                                              offset: updatedText.length),
+                              // AC = All Clear Button
+                              if (index == 0) {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      userInput = '0';
+                                      answer = '0';
+                                    });
+                                    final updatedText = userInput;
+                                    _controller.value =
+                                        _controller.value.copyWith(
+                                      text: updatedText,
+                                      selection: TextSelection.collapsed(
+                                          offset: updatedText.length),
+                                    );
+                                  },
+                                  buttonText: buttons[index],
+                                  color: Color(0xFF7BCFFF),
+                                  textColor: Color.fromARGB(255, 255, 255, 255),
+                                );
+                              }
+
+                              // C = Delete Button
+                              else if (index == 1) {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      userInput = userInput.substring(
+                                          0, userInput.length - 1);
+
+                                      if (userInput.length > 0) {
+                                        if (userInput[userInput.length - 1] ==
+                                                buttons[15] ||
+                                            userInput[userInput.length - 1] ==
+                                                buttons[11] ||
+                                            userInput[userInput.length - 1] ==
+                                                buttons[7] ||
+                                            userInput[userInput.length - 1] ==
+                                                buttons[3]) {
+                                          userInput = userInput;
+                                        } else {
+                                          check();
+                                          equalPressed();
+                                        }
+                                      } else if (userInput.length == 0) {
+                                        answer = '0';
+                                        userInput = '0';
+                                      }
+                                    });
+                                    final updatedText = userInput;
+                                    _controller.value =
+                                        _controller.value.copyWith(
+                                      text: updatedText,
+                                      selection: TextSelection.collapsed(
+                                          offset: updatedText.length),
+                                    );
+                                  },
+                                  buttonText: buttons[index],
+                                  color: Color(0xFF7BCFFF),
+                                  textColor: Color.fromARGB(255, 255, 255, 255),
+                                );
+                              }
+
+                              // % Button
+                              else if (index == 2) {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      userInput += buttons[index];
+                                      check();
+                                      equalPressed();
+                                    });
+                                    final updatedText = userInput;
+                                    _controller.value =
+                                        _controller.value.copyWith(
+                                      text: updatedText,
+                                      selection: TextSelection.collapsed(
+                                          offset: updatedText.length),
+                                    );
+                                  },
+                                  buttonText: buttons[index],
+                                  color: Color(0xFF7BCFFF),
+                                  textColor: Color.fromARGB(255, 255, 255, 255),
+                                );
+                              }
+
+                              //go to PageVoice
+                              else if (index == 16) {
+                                return FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.mic,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PageVoice()),
                                         );
                                       },
-                                      buttonText: buttons[index],
-                                      color: Color(0xFF7BCFFF),
-                                      textColor:
-                                          Color.fromARGB(255, 255, 255, 255),
-                                    );
-                                    //color: Color.fromARGB(255, 54, 186, 24);
-                                  }
+                                    ));
+                              }
 
-                                  // C = Delete Button
-                                  else if (index == 1) {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
+                              // Equal_to Button
+                              else if (index == 18) {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      userInput += '.';
+
+                                      check();
+                                      equalPressed();
+
+                                      if (userInput == '0.') {
+                                        answer = '0';
+                                      }
+                                    });
+                                    final updatedText = userInput;
+                                    _controller.value =
+                                        _controller.value.copyWith(
+                                      text: updatedText,
+                                      selection: TextSelection.collapsed(
+                                          offset: updatedText.length),
+                                    );
+                                  },
+                                  buttonText: buttons[index],
+                                  color: Colors.white,
+                                  textColor: Color(0xFF101213),
+                                );
+                              }
+
+                              //answer
+                              else if (index == 19) {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      check();
+                                      var n = userInput[userInput.length - 1];
+                                      if (n == '+' ||
+                                          n == '-' ||
+                                          n == 'x' ||
+                                          n == '/' ||
+                                          n == '.') {
+                                        userInput = userInput.substring(
+                                            0, userInput.length - 1);
+                                      }
+                                      equalPressed();
+
+                                      userInput = num.parse(answer).toString();
+                                      final updatedText = userInput;
+                                      _controller.value =
+                                          _controller.value.copyWith(
+                                        text: updatedText,
+                                        selection: TextSelection.collapsed(
+                                            offset: updatedText.length),
+                                      );
+                                    });
+                                  },
+                                  buttonText: buttons[index],
+                                  color: Color(0xFFF8A3EB),
+                                  textColor: Colors.white,
+                                );
+                              }
+
+                              // other buttons
+                              else {
+                                return MyButton(
+                                  buttontapped: () {
+                                    setState(() {
+                                      if (index == 15 ||
+                                          index == 11 ||
+                                          index == 7 ||
+                                          index == 3) {
+                                        userInput += buttons[index].toString();
+                                        check();
+                                      } else {
+                                        if (userInput.length == 1 &&
+                                            userInput[0] == '0') {
                                           userInput = userInput.substring(
                                               0, userInput.length - 1);
-
-                                          if (userInput.length > 0) {
-                                            if (userInput[
-                                                        userInput.length - 1] ==
-                                                    buttons[15] ||
-                                                userInput[
-                                                        userInput.length - 1] ==
-                                                    buttons[11] ||
-                                                userInput[
-                                                        userInput.length - 1] ==
-                                                    buttons[7] ||
-                                                userInput[
-                                                        userInput.length - 1] ==
-                                                    buttons[3]) {
-                                              userInput = userInput;
-                                              //answer = userInput[userInput.length];
-                                            } else {
-                                              check();
-                                              equalPressed();
-                                            }
-                                          } else if (userInput.length == 0) {
-                                            answer = '0';
-                                            userInput = '0';
-                                          }
-                                        });
-                                        final updatedText = userInput;
-                                        _controller.value =
-                                            _controller.value.copyWith(
-                                          text: updatedText,
-                                          selection: TextSelection.collapsed(
-                                              offset: updatedText.length),
-                                        );
-                                      },
-                                      buttonText: buttons[index],
-                                      color: Color(0xFF7BCFFF),
-                                      textColor:
-                                          Color.fromARGB(255, 255, 255, 255),
-                                    );
-                                  }
-
-                                  // % Button
-                                  else if (index == 2) {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
-                                          userInput += buttons[index];
                                           check();
-                                          equalPressed();
-                                        });
-                                        final updatedText = userInput;
-                                        _controller.value =
-                                            _controller.value.copyWith(
-                                          text: updatedText,
-                                          selection: TextSelection.collapsed(
-                                              offset: updatedText.length),
-                                        );
-                                      },
-                                      buttonText: buttons[index],
-                                      color: Color(0xFF7BCFFF),
-                                      textColor:
-                                          Color.fromARGB(255, 255, 255, 255),
+                                        }
+
+                                        userInput += buttons[index].toString();
+                                        equalPressed();
+                                        check();
+                                        if (answer2 == '0' && answer == '') {
+                                          answer = answer2;
+                                        }
+                                      }
+                                    });
+
+                                    final updatedText = userInput;
+                                    _controller.value =
+                                        _controller.value.copyWith(
+                                      text: updatedText,
+                                      selection: TextSelection.collapsed(
+                                          offset: updatedText.length),
                                     );
-                                  }
+                                  },
+                                  buttonText: buttons[index],
+                                  color: isOperator(buttons[index])
+                                      ? Color(0xFFF8A3EB)
+                                      : Colors.white,
+                                  textColor: isOperator(buttons[index])
+                                      ? Colors.white
+                                      : Color(0xFF101213),
+                                );
+                              }
+                            }),
+                      ],
+                    )),
+              ),
+            ],
+          );
+        }),
 
-                                  //go to PageVoice
-                                  else if (index == 16) {
-                                    return FittedBox(
-                                        fit: BoxFit.fitWidth,
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.mic,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PageVoice()),
-                                            );
-                                          },
-                                        ));
-                                  }
-
-                                  // Equal_to Button
-                                  else if (index == 18) {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
-                                          userInput += '.';
-
-                                          check();
-                                          equalPressed();
-
-                                          if (userInput == '0.') {
-                                            answer = '0';
-                                          }
-                                        });
-                                        final updatedText = userInput;
-                                        _controller.value =
-                                            _controller.value.copyWith(
-                                          text: updatedText,
-                                          selection: TextSelection.collapsed(
-                                              offset: updatedText.length),
-                                        );
-                                      },
-                                      buttonText: buttons[index],
-                                      color: Colors.white,
-                                      textColor: Color(0xFF101213),
-                                    );
-                                  }
-
-                                  //answer
-                                  else if (index == 19) {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
-                                          check();
-                                          var n =
-                                              userInput[userInput.length - 1];
-                                          if (n == '+' ||
-                                              n == '-' ||
-                                              n == 'x' ||
-                                              n == '/' ||
-                                              n == '.') {
-                                            userInput = userInput.substring(
-                                                0, userInput.length - 1);
-                                          }
-                                          equalPressed();
-                                          // list.add(userInput);
-                                          // print(list);
-                                          // Navigator.push(context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => PageHistory(history: userInput)
-                                          //   )
-                                          // );
-
-                                          userInput =
-                                              num.parse(answer).toString();
-                                          final updatedText = userInput;
-                                          _controller.value =
-                                              _controller.value.copyWith(
-                                            text: updatedText,
-                                            selection: TextSelection.collapsed(
-                                                offset: updatedText.length),
-                                          );
-                                        });
-                                      },
-                                      buttonText: buttons[index],
-                                      color: Color(0xFFF8A3EB),
-                                      textColor: Colors.white,
-                                    );
-                                  }
-
-                                  // other buttons
-                                  else {
-                                    return MyButton(
-                                      buttontapped: () {
-                                        setState(() {
-                                          if (index == 15 ||
-                                              index == 11 ||
-                                              index == 7 ||
-                                              index == 3) {
-                                            userInput +=
-                                                buttons[index].toString();
-                                            check();
-                                          } else {
-                                            if (userInput.length == 1 &&
-                                                userInput[0] == '0') {
-                                              userInput = userInput.substring(
-                                                  0, userInput.length - 1);
-                                              check();
-                                            }
-
-                                            userInput +=
-                                                buttons[index].toString();
-                                            equalPressed();
-                                            check();
-                                            if (answer2 == '0' &&
-                                                answer == '') {
-                                              answer = answer2;
-                                            }
-                                          }
-                                        });
-
-                                        final updatedText = userInput;
-                                        _controller.value =
-                                            _controller.value.copyWith(
-                                          text: updatedText,
-                                          selection: TextSelection.collapsed(
-                                              offset: updatedText.length),
-                                        );
-                                      },
-                                      buttonText: buttons[index],
-                                      color: isOperator(buttons[index])
-                                          ? Color(0xFFF8A3EB)
-                                          : Colors.white,
-                                      textColor: isOperator(buttons[index])
-                                          ? Colors.white
-                                          : Color(0xFF101213),
-                                    );
-                                  }
-                                }),
-                          ],
-                        )),
-                  ),
-                ],
-              );
-            }),
-
-            //listView(),
-          ]));
+        //listView(),
+      ]));
 
   bool isOperator(String x) {
     if (x == '/' || x == 'x' || x == '-' || x == '+' || x == '=') {
@@ -396,7 +341,6 @@ class Calculate extends State<PageCalculate> {
   }
 
   void check() {
-    //
     userInput = userInput.replaceAll('//', '/');
     userInput = userInput.replaceAll('xx', 'x');
     userInput = userInput.replaceAll('++', '+');
@@ -404,60 +348,42 @@ class Calculate extends State<PageCalculate> {
     userInput = userInput.replaceAll('%%', '%');
     userInput = userInput.replaceAll('++', '+');
     userInput = userInput.replaceAll('xx', 'x');
-    //
     userInput = userInput.replaceAll('x.', 'x0.');
     userInput = userInput.replaceAll('+.', '+0.');
     userInput = userInput.replaceAll('-.', '-0.');
     userInput = userInput.replaceAll('/.', '/0.');
     userInput = userInput.replaceAll('%.', '%');
-    //
     userInput = userInput.replaceAll('-+', '+');
     userInput = userInput.replaceAll('x+', '+');
     userInput = userInput.replaceAll('/+', '+');
-    //userInput = userInput.replaceAll('%+', '+');
     userInput = userInput.replaceAll('.+', '+');
-    //
     userInput = userInput.replaceAll('+-', '-');
     userInput = userInput.replaceAll('x-', '-');
     userInput = userInput.replaceAll('/-', '-');
-    //userInput = userInput.replaceAll('%-', '-');
     userInput = userInput.replaceAll('.-', '-');
-    //
     userInput = userInput.replaceAll('+x', 'x');
     userInput = userInput.replaceAll('-x', 'x');
     userInput = userInput.replaceAll('/x', 'x');
-    //userInput = userInput.replaceAll('%x', 'x');
     userInput = userInput.replaceAll('.x', 'x');
-    //
     userInput = userInput.replaceAll('+/', '/');
     userInput = userInput.replaceAll('-/', '/');
     userInput = userInput.replaceAll('x/', '/');
     userInput = userInput.replaceAll('%/', '/');
     userInput = userInput.replaceAll('./', '/');
-    //
     userInput = userInput.replaceAll('+%', '%');
     userInput = userInput.replaceAll('-%', '%');
     userInput = userInput.replaceAll('x%', '%');
     userInput = userInput.replaceAll('/%', '%');
     userInput = userInput.replaceAll('.%', '%');
-    //
     userInput = userInput.replaceAll('..', '.');
     userInput = userInput.replaceAll('=.', '');
-    //
-    //userInput = userInput.replaceAll(RegExp(r'(-+)|(x+)|(/+)|(%+)|(.+)'), '+');
-    // userInput = userInput.replaceAll(RegExp(r'(+-)|(x-)|(/-)|(%-)|(.-)'), '-');
-    // userInput = userInput.replaceAll(RegExp(r'(-x)|(+x)|(/x)|(%x)|(.x)'), 'x');
-    // userInput = userInput.replaceAll(RegExp(r'(-/)|(+/)|(x/)|(%/)|(./)'), '/');
-    // userInput = userInput.replaceAll(RegExp(r'(-%)|(+%)|(/%)|(x%)|(.+)'), '%');
   }
 
 // function to calculate the input operation
-//เหลือแก้ปัญหา dot เช่น 2.2.
   void equalPressed() {
     String finaluserinput(String str) {
       str = str.replaceAll('x', '*');
       str = str.replaceAll('%', '/100');
-      //str = str.replaceAll('e', '');
       return str;
     }
 
@@ -473,37 +399,5 @@ class Calculate extends State<PageCalculate> {
 
     answer =
         eval.toStringAsFixed(7).replaceAll(RegExp(r"([.]*0+)(?!.*\d)"), '');
-
-    // print('สมการ input ' + userInput);
-    // print('สมการ exp ' + exp.toString());
-    // print('คำตอบ ถ้าผลเป็น = ' + answer2);
-    // print('คำตอบ answer = ' + answer);
-
-    //answer = exp.toString();
-    //answer = eval.toString();
-    //answer = j.toString();
-    //toStringAsExponential(3);
   }
-
-  // ListView listView() {
-  //   return ListView.builder(
-  //     itemCount: list.length,
-  //     itemBuilder: (context, index) {
-  //       return TextButton(
-  //         child: Text(
-  //           '${list[index]}',
-  //           style: TextStyle(fontSize: 25),
-  //         ),
-  //         style: TextButton.styleFrom(
-  //             backgroundColor: Color(0),
-  //             padding: EdgeInsets.all(10),
-  //             side: BorderSide(color: Color.fromARGB(119, 129, 129, 129)),
-  //             tapTargetSize: MaterialTapTargetSize.shrinkWrap),
-  //         onPressed: () {
-  //           //print('Button pressed' + pushanswer.toString() );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 }

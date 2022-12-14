@@ -45,7 +45,7 @@ class Voice extends State<PageVoice> {
     if (audioPlugin.state == PlayerState.playing) {
       await audioPlugin.stop();
     }
-    // Hard coding the voice related settings
+
     final String audioContent = await TextToSpeechAPI()
         .synthesizeText(text, 'th-TH-Standard-A', 'th-TH');
     if (audioContent == null) return;
@@ -123,7 +123,6 @@ class Voice extends State<PageVoice> {
           }
           // while(splittr.length > 1){
 
-          // }
           var i = 0;
           print(splittr.first.isEmpty);
           if (splittr.length == 2 ||
@@ -197,7 +196,6 @@ class Voice extends State<PageVoice> {
           }
           // print("FINAL" + responseText);
           recognizeFinished = true;
-          // equalPressed();
         });
       } else {
         setState(() {
@@ -242,8 +240,6 @@ class Voice extends State<PageVoice> {
           return Column(
             children: <Widget>[
               Expanded(
-                //flex: 2,
-                //child: FittedBox(
                 child: Container(
                   child: SingleChildScrollView(
                     child: Column(
@@ -326,15 +322,12 @@ class Voice extends State<PageVoice> {
     ContextModel cm = ContextModel();
     double eval = exp.evaluate(EvaluationType.REAL, cm);
     answer = eval.toStringAsFixed(4);
-    // synthesizeText(text, '');
-    // synthesizeText(input + 'เท่ากับ ', 'A');
+
     if (complete_exp) {
       if (eval % 1 == 0) {
-        // ftts.speak(eval.toStringAsFixed(0));
         synthesizeText(voiceSense(responseText, eval.toString()), 'A');
       } else {
         synthesizeText(voiceSense(responseText, eval.toString()), 'B');
-        // ftts.speak(eval.toString());
       }
     } else {
       synthesizeText(
@@ -342,11 +335,6 @@ class Voice extends State<PageVoice> {
               answer,
           'C');
     }
-
-    //answer = exp.toString();
-    //answer = eval.toString();
-    //answer = j.toString();
-    //toStringAsExponential(3);
   }
 
   String voiceSense(String inputs, String outputs) {
